@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-import "./IChainPass.sol";
+import "./IChaiPassEndpoint.sol";
 
-contract ChaiPass is IChainPass {
+contract ChaiPass is IChaiPassEndpoint {
     error InvalidAddress();
 
     event SendMessage(
@@ -11,13 +11,6 @@ contract ChaiPass is IChainPass {
         uint256 _nonce,
         address _destinationAddress,
         uint256 _destinationChainId,
-        bytes _payload
-    );
-
-    event ReceiveMessage(
-        uint16 _srcChainId,
-        address _from,
-        uint64 _nonce,
         bytes _payload
     );
 
@@ -42,19 +35,5 @@ contract ChaiPass is IChainPass {
             _destinationChainId,
             _payload
         );
-    }
-
-    /// @notice This function is responsible for receiving messages on destination chain
-    /// @param _srcChainId Source chain Id
-    /// @param _from Source chain contract address
-    /// @param _nonce nonce
-    /// @param _payload Encoded data received from source chain
-    function receiveMessage(
-        uint16 _srcChainId,
-        address _from,
-        uint64 _nonce,
-        bytes calldata _payload
-    ) external {
-        emit ReceiveMessage(_srcChainId, _from, _nonce, _payload);
     }
 }
